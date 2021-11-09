@@ -99,10 +99,53 @@ newDiv.style.fontSize = '30px';
 container.insertBefore(newDiv,h1);
 
 
- var newItem = document.createElement("li");
- var textnode = document.createTextNode("Hello World");
- newItem.appendChild(textnode);
+var newItem = document.createElement("li");
+var textnode = document.createTextNode("Hello World");
+newItem.appendChild(textnode);
 
- var list = document.querySelector("#items");
+var list = document.querySelector("#items");
 
- list.insertBefore(newItem, list.firstElementChild);
+list.insertBefore(newItem, list.firstElementChild);
+
+
+
+var form = document.getElementById('addForm');
+var itemList = document.getElementById('items');
+
+form.addEventListener('submit', addItem);
+itemList.addEventListener('click', removeItem);
+
+function addItem(e) {
+	e.preventDefault();
+	var newItem = document.getElementById('item').value;
+
+	var li = document.createElement('li');
+	li.className = 'list-group-item';
+
+	var data = document.createTextNode(newItem);
+	li.appendChild(data);
+	itemList.appendChild(li);
+
+	var btn = document.createElement('button');
+	btn.className = 'btn btn-danger btn-sm float-right delete';
+
+	btn.appendChild(document.createTextNode('X'));
+	li.appendChild(btn);
+	
+	//create edit button
+	var bttn = document.createElement('button');
+	bttn.className = 'btn btn-success btn-sm float-right';
+
+	bttn.appendChild(document.createTextNode('Edit'));
+	li.appendChild(bttn);
+
+}
+
+function removeItem(e) {
+	if(e.target.classList.contains('delete')){
+		if (confirm('Are You Sure?')) {
+			var li = e.target.parentElement;
+			itemList.removeChild(li);
+		}
+	}
+}
