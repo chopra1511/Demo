@@ -111,19 +111,31 @@ list.insertBefore(newItem, list.firstElementChild);
 
 var form = document.getElementById('addForm');
 var itemList = document.getElementById('items');
+var filter = document.getElementById('filter');
 
 form.addEventListener('submit', addItem);
 itemList.addEventListener('click', removeItem);
+filter.addEventListener('keyup', findItem);
 
 function addItem(e) {
 	e.preventDefault();
 	var newItem = document.getElementById('item').value;
+	var newDis = document.getElementById('dis').value;
 
 	var li = document.createElement('li');
 	li.className = 'list-group-item';
 
 	var data = document.createTextNode(newItem);
 	li.appendChild(data);
+	itemList.appendChild(li);	
+	
+	li.appendChild(document.createTextNode(" "));
+	itemList.appendChild(li);
+
+	var br = document.createElement('br');
+	li.appendChild(br);
+
+	li.appendChild(document.createTextNode(newDis));
 	itemList.appendChild(li);
 
 	var btn = document.createElement('button');
@@ -148,4 +160,19 @@ function removeItem(e) {
 			itemList.removeChild(li);
 		}
 	}
+}
+
+function findItem(e) {
+	var text = e.target.value.toLowerCase();
+	var items = itemList.getElementsByTagName('li');
+	Array.from(items).forEach(function(item) {
+		var itemName = item.textContent;
+		console.log(itemName);
+		if(itemName.toLowerCase().indexOf(text) != -1){
+			item.style.display = 'block';
+		}
+		else{
+			item.style.display = 'none'
+		}
+	})
 }
