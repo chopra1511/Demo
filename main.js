@@ -15,11 +15,20 @@ function onSubmit(e) {
         msgInput.remove();
     }, 2000);
 
-    var nameData = nameInput.value;
-    var mailData = mail.value;
+  let obj = {
+         nameData : nameInput.value,
+         mailData : mail.value
+    }
+    
+    let newObj = JSON.stringify(obj);
+    localStorage.setItem('obj',newObj);
+    let newObj1 = JSON.parse(localStorage.getItem('obj',newObj));
+    let display = localStorage.getItem('obj',newObj1);
 
-    localStorage.setItem('userDetails',`${nameData}:${mailData}`);
-
+    var items = document.getElementById('items');
+    var li = document.createElement('li');
+    li.appendChild(document.createTextNode(display));
+    items.appendChild(li);
     nameInput.value = "";
     mail.value = "";
 
