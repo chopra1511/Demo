@@ -9,57 +9,67 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-        
+        <!-- <div id="div1"></div>
+        <button id="update">update me</button> -->
         <script>
-        //   let obj = {
-        //         num: 5
-        //     }
-        //     let sum = function (a) {
-        //         return this.num + a;
-        //     }
-        //     console.log(sum.call(obj, 5));
+           let posts = [
+               { title: "Post One", body: "This is Post One" },
+               { title: "Post Two", body: "This is Post Two" },
+               { title: "Post Three", body: "This is Post Three" }
+           ]
+           
+           
+           function getpost() {
+               setTimeout(() => {
+                   let output = " ";
+                   posts.forEach(post => {
+                       output += `<li>${post.title} </li>`;
+                   });
+                   document.body.innerHTML = output;
+               }, 1000);
+           }
+            function createPost(post) {
+                    return new Promise((resolve, reject) => {
+                        setTimeout(() => {
+                            posts.push(post);
+                            let err = false;
+                            if (!err) {
+                                resolve();
+                            } else {
+                                reject("Error:Something went wrong");
+                            }
+                        }, 1000);
+                    });
 
-        //     let obj = {
-        //         num: 5
-        //     }
-        //     let sum = function (a, b, c) {
-        //         return this.num + a + b + c;
-        //     }
-        //     let arr = [5, 10, 15];
-        //     console.log(sum.apply(obj, arr));
-
-        //     let obj = {
-        //         num: 5
-        //     }
-        //     let sum = function (a, b, c) {
-        //         return this.num + a + b + c;
-        //     }
-        //     let res = sum.bind(obj);
-        //     console.log(res(5, 10, 15));
-
-//             let student = {
-//                 age: 20
-//             }
-//             let printAge = function () {
-//                 return this.age;
-//             }
-//             let res = printAge.bind(student);
-//             console.log(res());
-            
-            // let multiplyByTwo = multiply.bind(this, 2);
-            // multiplyByTwo(3);
-
-            // let multiplyByFive = multiply.bind(this, 5);
-            // multiplyByFive(5);
-
-            function multiply(x) {
-                return function (y) {
-                    console.log(x * y);
                 }
-            }
 
-            let multiplyByTwo = multiply(2);
-            multiplyByTwo(3);
+           function deletePost() {
+               return new Promise((resolve, reject) => {
+                   setTimeout(() => {
+                       posts.pop();
+                       if (posts.length != 0) {
+                           resolve();
+                       } else {
+                           reject("Error:Array is Empty");
+                       }
+                   }, 1000);
+               });
+               
+           }
+
+        //    function getLastEditTime() {
+        //        let curr = new Date();
+        //        return curr.getHours() + ':' + curr.getMinutes() + ':' + curr.getSeconds();
+        //    }
+        
+        createPost({ title: "Post Four", body: "This is Post Four" }).then(getpost).catch(err => console.log(err));
+
+        posts.forEach(post =>{
+             deletePost().then(getpost).catch(err => console.log(err));
+         })
+        
+        
+            
         </script>
     </body>
 </html>
