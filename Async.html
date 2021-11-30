@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>demo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <!-- <div id="div1"></div>
+        <button id="update">update me</button> -->
+    <script>
+        console.log('Person1: shows tickets');
+        console.log('Person2: shows tickets');
+
+        const preMovie = async () => {
+           
+            const promiseShowTics = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve('Tickets');
+                }, 3000);
+
+            });
+
+            const getPopcorn = new Promise((resolve,reject) =>{ resolve('Popcorn') });
+            const butterPopcorn = new Promise((resolve, reject) => { resolve('Butter') });
+            const getColdDrinks = new Promise((resolve,reject) => { resolve('Cold Drink')});
+
+            let tickets = await promiseShowTics;
+            // console.log(`Wife: I have the ${tickets}`);
+            // console.log('Husband: Should we go in?');
+            // console.log('Wife: I am hungry!');
+
+            // let popcorn = await getPopcorn;
+            // console.log(`Husband: Here I got some ${popcorn}`);
+            // console.log('Husband: Should we go in?');
+            // console.log('Wife: I need butter on my popcorn!');
+
+            // let butter = await butterPopcorn;
+            // console.log(`Husband: I got some ${butter} on the popcorn`);
+            // console.log('Husband: Anything else Darling');
+            // console.log('Wife: can I get a Cold Drink');
+            // console.log('Husband: Sure Darling');
+
+            // let coldDrink = await getColdDrinks;
+            // console.log(`Husband: I got you a ${coldDrink}`);
+            // console.log('Husband: Anything else Darling');
+            // console.log('Wife: We are getting late!');
+            // console.log('Husband: Thank you for the reminder...');
+
+            let [popcorn,butter,coldDrink] = await Promise.all([getPopcorn,butterPopcorn,getColdDrinks]);
+            console.log(`${popcorn},${butter},${coldDrink}`);
+            return tickets;
+        };
+
+        preMovie().then((m) => { console.log(`Person3: shows ${m}`) });
+            
+    </script>
+</body>
+
+</html>
