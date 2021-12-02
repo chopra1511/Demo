@@ -11,6 +11,7 @@
         <button> Submit </button>
     </form>
     <ul id='listOfUsers'></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
     <script>
         function saveToLocalStorage(event) {
             event.preventDefault();
@@ -25,11 +26,20 @@
                 email,
                 phonenumber
             }
-            localStorage.setItem(obj.email, JSON.stringify(obj))
-            showNewUserOnScreen(obj)
+
+            axios
+                .post("https://crudcrud.com/api/8fdc59756f4e4bb3ac03c7104baf3463/appointmentdata",obj)
+                .then(res => showNewUserOnScreen(res.data))
+                .catch(err => console.error(err));
+            // localStorage.setItem(obj.email, JSON.stringify(obj))
+            // showNewUserOnScreen(obj)
         }
 
         window.addEventListener("DOMContentLoaded", () => {
+            axios
+                .get("https://crudcrud.com/api/8fdc59756f4e4bb3ac03c7104baf3463/appointmentdata")
+                .then(res => showNewUserOnScreen(res.data))
+                .catch(err => console.log(err));
             const localStorageObj = localStorage;
             const localstoragekeys = Object.keys(localStorageObj)
 
@@ -86,12 +96,6 @@
                 parentNode.removeChild(childNodeToBeDeleted)
             }
         }
-
-
-
-
-
-
 
     </script>
 
