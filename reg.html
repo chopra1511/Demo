@@ -28,7 +28,7 @@
             }
 
             axios
-                .post("https://crudcrud.com/api/8fdc59756f4e4bb3ac03c7104baf3463/appointmentdata",obj)
+                .post("https://crudcrud.com/api/2bbb5ebdb4474bba854c93b4e37b696b/appointmentdata",obj)
                 .then(res => showNewUserOnScreen(res.data))
                 .catch(err => console.error(err));
             // localStorage.setItem(obj.email, JSON.stringify(obj))
@@ -37,7 +37,7 @@
 
         window.addEventListener("DOMContentLoaded", () => {
             axios
-                .get("https://crudcrud.com/api/8fdc59756f4e4bb3ac03c7104baf3463/appointmentdata")
+                .get("https://crudcrud.com/api/2bbb5ebdb4474bba854c93b4e37b696b/appointmentdata")
                 .then(res => {
                     for(var i=0;i<res.data.length;i++){
                         showNewUserOnScreen(res.data[i])
@@ -65,9 +65,9 @@
             }
 
             const parentNode = document.getElementById('listOfUsers');
-            const childHTML = `<li id=${user.email}> ${user.name} - ${user.email}
-                                        <button onclick=deleteUser('${user.email}')> Delete User </button>
-                                        <button onclick=editUserDetails('${user.email}','${user.name}','${user.phonenumber}')>Edit User </button>
+            const childHTML = `<li id=${user.email}> ${user.name} - ${user.email} - ${user._id}
+                                        <button onclick=deleteUser('${user._id}')> Delete User </button>
+                                        <button onclick=editUserDetails('${user.email}','${user.name}','${user.phonenumber}','${user._id}')>Edit User </button>
                                      </li>`
 
             parentNode.innerHTML = parentNode.innerHTML + childHTML;
@@ -75,27 +75,32 @@
 
         //Edit User
 
-        function editUserDetails(emailId, name, phonenumber) {
+        function editUserDetails(emailId, name, phonenumber, _id) {
 
             document.getElementById('email').value = emailId;
             document.getElementById('username').value = name;
             document.getElementById('phonenumber').value = phonenumber;
 
-            deleteUser(emailId)
+            deleteUser(_id)
         }
 
         // deleteUser('abc@gmail.com')
 
-        function deleteUser(emailId) {
-            console.log(emailId)
-            localStorage.removeItem(emailId);
-            removeUserFromScreen(emailId);
+        function deleteUser(_id) {
+            console.log(_id)
+            axios
+                .delete(`https://crudcrud.com/api/2bbb5ebdb4474bba854c93b4e37b696b/appointmentdata/${_id}`)
+                .then(res => removeUserFromScreen(_id))
+                .catch(err => console.log(err));
+            // localStorage.removeItem(emailId);
+            
 
         }
 
-        function removeUserFromScreen(emailId) {
+        function removeUserFromScreen(_id) {
+           
             const parentNode = document.getElementById('listOfUsers');
-            const childNodeToBeDeleted = document.getElementById(emailId);
+            const childNodeToBeDeleted = document.getElementById(_id);
             if (childNodeToBeDeleted) {
                 parentNode.removeChild(childNodeToBeDeleted)
             }
