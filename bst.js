@@ -1,41 +1,44 @@
- class Node {
-                constructor(data) {
-                    this.data = data;
-                    this.left = null;
-                    this.right = null;
-                }
+let root;
 
-                insert(data) {
-                    if (data < this.data && this.left) {
-                        this.left.insert(data);
-                    } else if (data < this.data) {
-                        this.left = new Node(data);
-                    }
+class Node {
+    constructor(data) {
+        this.left = null;
+        this.right = null;
+        this.data = data;
+    }
+}
 
-                    if (data > this.data && this.right) {
-                        this.right.insert(data);
-                    } else if (data > this.data) {
-                        this.right = new Node(data);
-                    }
-                }
+        
+function findMax(node) {
+    if (node == null)
+        return Number.MIN_VALUE;
+    while (node.right != null) {
+        node = node.right;
+    }
+    return node.data;
+    
+}
 
-                contains(data) {
-                    if (this.data === data) {
-                        return this;
-                    }
+function findMin(node)
+    {
+        //code
+        if (node == null) {
+            return -1;
+        }
+        while(node.left != null){
+            node = node.left;
+        }
+        return node.data;
 
-                    if (data < this.data && this.left) {
-                        return this.left.contains(data);
-                    } else if (data > this.data && this.right) {
-                        return this.right.contains(data);
-                    } else {
-                        return console.log("Nope");;
-                    }
-                }
-            }
-            let n = new Node();
-            n.insert(10);
-            n.insert(30);
-            n.insert(50);
-            n.insert(40);
-            n.contains(60);
+root = new Node(15);
+root.left = new Node(10);
+root.right = new Node(20);
+root.left.left = new Node(8);
+root.left.right = new Node(12);;
+root.right.right = new Node(25);
+root.right.left = new Node(17);
+
+console.log("Maximum element is " + findMax(root));
+console.log("Minimum element is " + findMin(root));
+    
+     
